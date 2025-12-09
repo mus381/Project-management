@@ -1,0 +1,14 @@
+{
+  "title": "transactions",
+  "type": "object",
+  "properties": {
+    "transaction_id": { "type": "string" },
+    "merchant_id": { "type": "string" },
+    "amount": { "type": "number" },
+    "currency": { "type": "string" },
+    "type": { "type": "string" },
+    "created_at": { "type": "string" },
+    "status": { "type": "string" }
+  },
+  "required": ["transaction_id", "merchant_id", "amount", "currency", "created_at"]
+}

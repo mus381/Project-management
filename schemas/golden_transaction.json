@@ -1,0 +1,9 @@
+{
+  "transaction_id": "txn_20251203_0001",
+  "merchant_id": "m_404",
+  "amount": 1250.0,
+  "currency": "KES",
+  "type": "sale",
+  "created_at": "2025-12-03T09:15:00Z",
+  "status": "settled"
+}

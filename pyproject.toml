@@ -1,0 +1,10 @@
+[project]
+name = "daily-settlements"
+version = "0.1.0"
+dependencies = [
+    "pandas",
+    "jsonschema"
+]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
