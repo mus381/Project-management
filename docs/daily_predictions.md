@@ -33,3 +33,19 @@ Why retries can’t create duplicates
 
 Why ledger systems exist
 
+## Day 5
+# dec 10 2025
+
+## Predections
+the command ran with alternative success n failures proving this;
+## What I just learned
+
+- I now understand:
+
+- Why APIs aren't trusted blindly
+
+- Why Stripe retries webhooks
+
+- Why networks lie
+
+- Why backoff prevents outages
