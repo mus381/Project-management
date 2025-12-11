@@ -49,3 +49,30 @@ the command ran with alternative success n failures proving this;
 - Why networks lie
 
 - Why backoff prevents outages
+
+
+# day 6
+# Dec 11 2025
+
+# predictions
+
+i ran command python3 -m src.reconcile
+n got this output
+python3 -m src.reconcile
+✅ Reconciliation successful
+
+proving this you can’t trust what you can’t see.
+
+strongly validated by this;
+cat logs/metrics.log
+2025-12-11 07:24:14,252 - execution_time=0.0096
+
+# what i just learned
+
+Observability into runtime
+
+Timing introspection
+
+Machine-readable logs
+
+literally what production fintech relies on.

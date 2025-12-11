@@ -9,3 +9,10 @@ N/A
 
 N/A
 Why all errors here were expected didn't get an error at runtime.
+
+
+# Day 6
+# Dec 11 2025
+
+N/A
+why commands ran as expected nothing to log here

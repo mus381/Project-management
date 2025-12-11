@@ -146,3 +146,60 @@ Retrying in 4s...
 
 ## Error
 N/A
+
+
+## Day 6
+# Dec 11 2025
+
+# Today i built:
+
+Structured logging
+
+Basic metrics
+
+Execution timing
+
+- With Real fintech-grade discipline.
+
+- Command used; touch src/metrics.py
+-
+- modified reconcile.py at the top with;
+- from src.metrics import time_it
+# Decorated my reconcile function with;
+- @time_it
+def reconcile():
+
+
+# ran using this
+python3 -m src.reconcile
+
+# results
+python3 -m src.reconcile
+✅ Reconciliation successful
+-
+# Why:
+
+- to expose What happened
+
+- When
+
+- Why
+
+- How long it took
+
+
+- Expected:
+
+cat logs/metrics.log
+2025-12-11 07:24:14,252 - execution_time=0.0096
+
+I now have:
+
+Observability into runtime
+
+Timing introspection
+
+Machine-readable logs
+
+##  ERROR:
+- N/A
