@@ -1,10 +1,13 @@
+
 import os
 import pandas as pd
 from src.exceptions import log_error
+from src.metrics import time_it
 
 RAW_PATH = "data/raw/raw_transactions.csv"
 OUT_PATH = "data/outputs/cleaned_transactions.csv"
 
+@time_it
 def reconcile():
     try:
         if not os.path.exists(RAW_PATH):
@@ -23,3 +26,5 @@ def reconcile():
 
 if __name__ == "__main__":
     reconcile()
+
+
