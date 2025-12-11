@@ -14,6 +14,11 @@ if not logger.handlers:
     handler.setFormatter(formatter)
     logger.addHandler(handler)
 
+
 def log_error(message: str):
     logger.error(message)
     print(f"[LOGGED] {message}")
+
+
+class FileMissingError(Exception):
+    pass

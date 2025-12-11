@@ -1,30 +1,34 @@
 
+
 import os
 import pandas as pd
-from src.exceptions import log_error
-from src.metrics import time_it
+import time
 
-RAW_PATH = "data/raw/raw_transactions.csv"
-OUT_PATH = "data/outputs/cleaned_transactions.csv"
+from metrics import Timer, record_metric
+from exceptions import FileMissingError, log_error
 
-@time_it
+
+RAW_FILE = "data/raw/raw_transactions.csv"
+OUTPUT_FILE = "data/ledger/processed_transactions.csv"
+
+
 def reconcile():
-    try:
-        if not os.path.exists(RAW_PATH):
-            raise FileNotFoundError("raw_transactions.csv missing")
+    if not os.path.exists(RAW_FILE):
+        msg = "raw_transactions.csv missing"
+        log_error(msg)
+        raise FileMissingError(msg)
 
-        df = pd.read_csv(RAW_PATH)
+    with Timer("step_time", step="load_csv"):
+        df = pd.read_csv(RAW_FILE)
 
-        if df.empty:
-            raise ValueError("Raw file is empty")
+    with Timer("step_time", step="clean"):
+        df = df.dropna()
 
-        df.to_csv(OUT_PATH, index=False)
-        print("✅ Reconciliation successful")
+    with Timer("step_time", step="write_output"):
+        os.makedirs("data/ledger", exist_ok=True)
+        df.to_csv(OUTPUT_FILE, index=False)
 
-    except Exception as e:
-        log_error(str(e))
 
 if __name__ == "__main__":
-    reconcile()
-
-
+    with Timer("execution_time", job="reconcile"):
+        reconcile()

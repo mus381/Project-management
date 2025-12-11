@@ -203,3 +203,61 @@ Machine-readable logs
 
 ##  ERROR:
 - N/A
+
+# Updated metrics n reconcile
+Added labels to metrics to make it production-grade.
+In src/metrics.py replaced:
+def record_metric(name: str, value):
+    logging.info(f"{name}={value}")
+
+
+With:
+
+def record_metric(name: str, value, **labels):
+    label_str = ",".join([f"{k}={v}" for k, v in labels.items()])
+    if label_str:
+        logging.info(f"{name}={value} | {label_str}")
+    else:
+        logging.info(f"{name}={value}")
+
+
+Now i can do:
+
+record_metric("execution_time", duration, job="reconcile", step="end")
+
+# Add 2
+# Timed each step, not just the whole job
+
+Created a simple helper:
+
+Added to src/metrics.py
+class Timer:
+    def __init__(self, metric_name, **labels):
+        self.metric_name = metric_name
+        self.labels = labels
+
+    def __enter__(self):
+        self.start = time.time()
+
+    def __exit__(self, exc_type, exc_value, traceback):
+        end = time.time()
+        record_metric(self.metric_name, round(end - self.start, 4), **self.labels)
+
+Then inside reconcile():
+with Timer("step_time", step="load_csv"):
+    df = pd.read_csv(input_path)
+
+with Timer("step_time", step="clean"):
+    df = df.dropna()
+
+with Timer("step_time", step="write_output"):
+    df.to_csv(output_path, index=False)
+
+
+Now your metrics.log will looks like:
+
+step_time=0.0012 | step=load_csv
+step_time=0.0048 | step=clean
+step_time=0.0021 | step=write_output
+execution_time=0.0096 | job=reconcile
+
