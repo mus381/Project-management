@@ -1,14 +1,15 @@
 {
-  "title": "transactions",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "transaction",
   "type": "object",
   "properties": {
-    "transaction_id": { "type": "string" },
+    "txn_id": { "type": "string", "minLength": 1 },
     "merchant_id": { "type": "string" },
     "amount": { "type": "number" },
-    "currency": { "type": "string" },
-    "type": { "type": "string" },
-    "created_at": { "type": "string" },
+    "currency": { "type": "string", "pattern": "^[A-Z]{3}$" },
+    "type": { "type": "string", "enum": ["sale", "refund", "fee"] },
+    "created_at": { "type": "string", "format": "date-time" },
     "status": { "type": "string" }
   },
-  "required": ["transaction_id", "merchant_id", "amount", "currency", "created_at"]
+  "required": ["txn_id", "merchant_id", "amount", "currency", "created_at"]
 }

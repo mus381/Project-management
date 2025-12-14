@@ -1,19 +1,16 @@
 import time
-import random
+from src.structured_logging import log_event
 
-def retry(operation, max_retries=3):
-    attempt = 0
-
-    while attempt < max_retries:
+def retry(fn, max_retries=3, backoff=1):
+    for attempt in range(1, max_retries + 1):
         try:
-            print(f"Attempt {attempt + 1}")
-            operation()
-            return
+            return fn()
         except Exception as e:
-            print(f"Failed: {e}")
-            sleep_time = 2 ** attempt
-            print(f"Retrying in {sleep_time}s...")
-            time.sleep(sleep_time)
-            attempt += 1
-
-    print("❌ All retries exhausted")
+            log_event(
+                "retry_failure",
+                attempt=attempt,
+                error=str(e)
+            )
+            if attempt == max_retries:
+                raise
+            time.sleep(backoff * attempt)
